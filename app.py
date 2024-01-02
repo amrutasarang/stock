@@ -1,8 +1,6 @@
 import streamlit as st,pandas as pd, numpy as np, yfinance as yf
-from streamlit_option_menu import option_menu
 import matplotlib.pyplot as plt
 import plotly.express as px
-from alpha_vantage.fundamentaldata import FundamentalData
 from datetime import date,timedelta
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
@@ -10,15 +8,9 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import r2_score, mean_absolute_error,accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.model_selection import RepeatedKFold
 from sklearn.svm import SVR
 import pandas_datareader as web
-import pickle
-import pandas_datareader.data as web
 import pandas_ta as ta
-from sklearn.linear_model import LogisticRegression
-from streamlit_tags import st_tags
 # https://tradewithpython.com/generating-buy-sell-signals-using-python
 st.title('Stock Tracker')
 ticker=st.sidebar.text_input('Stock Symbol',value='MSFT')
@@ -29,7 +21,7 @@ j=yf.Ticker(ticker)
 # img=px.line(data,x=data.index,y=data['Adj Close'],title='Performance Chart'+" "+j.info['longName']+"("+ ticker+")")
 img=px.line(data,x=data.index,y=data['Adj Close'],title='Performance Chart'+" "+ticker)
 st.plotly_chart(img)
-Data,Statistics,News,Predict,Indicators,Portfolio=st.tabs(["**Price Data**","**Statistics**","**News**","**Predict**","**Indicators**","**Portfolio**"])
+Data,Statistics,News,Predict,Indicators=st.tabs(["**Price Data**","**Statistics**","**News**","**Predict**","**Indicators**","**Portfolio**"])
 with Data:
     st.write("Data")
     df=data
@@ -93,13 +85,6 @@ with News:
         ns=dn['sentiment_summary'][i]
         st.write(f'**News Sentiment:** {ns}')
 
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import mean_squared_error,r2_score,accuracy_score
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import Ridge
-from sklearn.linear_model import LassoCV
-from sklearn.linear_model import Lasso
     
 with Predict:
     def model_engine(num):
@@ -281,18 +266,6 @@ with Indicators:
     ax2.grid()
     plt.show()
     st.pyplot(plt)
-from empyrial import empyrial, Engine
-
-with Portfolio:
-    date=st.date_input('**Start-Date**',value=date.today())
-    key=st_tags(label='Enter Assests')
-    portfolio = Engine(    
-                    start_date= str(date), #start date for the backtesting
-                    portfolio= key, #assets in your portfolio 
-                    benchmark = ["SPY"] #SPY is set by default
-    )
-    
-    st.write(empyrial(portfolio))
 
 
     
