@@ -21,7 +21,7 @@ j=yf.Ticker(ticker)
 # img=px.line(data,x=data.index,y=data['Adj Close'],title='Performance Chart'+" "+j.info['longName']+"("+ ticker+")")
 img=px.line(data,x=data.index,y=data['Adj Close'],title='Performance Chart'+" "+ticker)
 st.plotly_chart(img)
-Data,Statistics,News,Predict,Indicators=st.tabs(["**Price Data**","**Statistics**","**News**","**Predict**","**Indicators**","**Portfolio**"])
+Data,Statistics,News,Predict,Indicators=st.tabs(["**Price Data**","**Statistics**","**News**","**Predict**","**Indicators**"])
 with Data:
     st.write("Data")
     df=data
